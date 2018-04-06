@@ -1,0 +1,107 @@
+// themes - our custom or/and out of the box themes
+@import 'themes';
+
+// framework component themes (styles tied to theme variables)
+@import '~@nebular/theme/styles/globals';
+@import '~@nebular/auth/styles/all';
+
+// loading progress bar theme
+@import './pace.theme';
+
+// install the framework and custom global styles
+@include nb-install() {
+
+  // framework global styles
+  @include nb-theme-global();
+  @include nb-auth-global();
+
+  // loading progress bar
+  @include ngx-pace-theme();
+
+  .ng-invalid, .ng-invalid:focus{
+    border-color: nb-theme(color-danger);
+  }
+};
+
+
+
+.nb-theme-default{
+  .input-group-sm{
+    .input-group-addon{
+      font-size: .875rem;
+      padding: .580rem 1.125rem;
+      &:focus{
+        box-shadow: none;
+      }
+    }
+  }
+
+  select.form-control:not([size]):not([multiple]) {
+    height: calc(2rem + 10px);
+  }
+
+  .form-control{
+    &:focus{
+      box-shadow: none;
+    }
+  }
+
+  .input-group-addon, .form-control{
+    padding: 0.45rem 1.025rem;
+  }
+
+  .btn{
+    padding: 0.45rem 1.025rem;
+  }
+
+  .table-container{
+    margin-top: 10px;
+    overflow: scroll;
+    height: calc(100vh - 415px);
+
+    .btn-inline{
+      .btn{
+        display: inline-block !important;
+        padding: 4px 10px;
+      }
+    }
+  }
+
+  .file-container-input{
+    border: 1px dashed white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    &.not-file{
+      filter: grayscale(100%);
+      -webkit-filter: grayscale(100%);
+    }
+
+    i.fa-eye{
+      opacity: .5;
+      font-size: 20px;
+      position: absolute;
+      top:0;
+      right: 10px;
+      transition: all .1s ease-in;
+
+      &:hover{
+        font-size: 25px;
+        opacity: 1;
+      }
+    }
+
+    img{
+      margin-bottom: 10px;
+    }
+
+    input[type=file]{
+      display: none !important;
+    }
+
+
+  }
+}

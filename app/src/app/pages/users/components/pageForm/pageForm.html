@@ -1,0 +1,79 @@
+<div [formGroup]="formGroup">
+    <div class="row" >
+        <div class="col-md-6">
+            <nb-card>
+                <nb-card-header>Accesos</nb-card-header>
+                <nb-card-body>
+                    <div class="row">
+                        <div class="col-md-12" *ngIf="isCreation || userService.isAdmin()">
+                            <div class="form-group">
+                                <label for="role">Tipo de Usuario</label>
+                                <select class="form-control" formControlName="role" id="role" placeholder="Rol de Usuario">
+                                    <option value="0">Sin rol</option>
+                                    <option  *ngFor="let role of roles" [value]="role.id">{{role.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" formControlName="email" id="email" placeholder="Telefono Celular">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="confirmation_password">Confirmar Password</label>
+                                <input type="password" class="form-control" formControlName="confirmation_password" id="confirmation_password" placeholder="Confirmar Password">
+                            </div>
+                        </div>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-md-6">
+            <nb-card>
+                <nb-card-header>Datos Personales</nb-card-header>
+                <nb-card-body>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="first_name">Nombre</label>
+                                <input type="text" class="form-control" formControlName="first_name" id="first_name" placeholder="Nombre">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="last_name">Apellido</label>
+                                <input type="text" class="form-control" formControlName="last_name" id="last_name" placeholder="Apellido">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Genero</label>
+                                <div class="form-check">
+                                    <label class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" formControlName="gender" value="male" name="gender" checked>
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">Hombre</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" formControlName="gender" value="female" name="gender">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">Mujer</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </div>
+    </div>
+</div>
+<!--</form>-->

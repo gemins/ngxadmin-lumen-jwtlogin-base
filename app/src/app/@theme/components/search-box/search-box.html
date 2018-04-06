@@ -1,0 +1,100 @@
+<form (ngSubmit)="searching()" class="form-inline" >
+    <div class="input-group">
+        <input type="text" class="form-control text-sm" value="" [(ngModel)]="baSearch" [ngModelOptions]="{standalone: true}"  placeholder="Buscar..."/>
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-info btn-icon">
+                <i class="nb-search"></i>
+            </button>
+        </span>
+    </div>
+    <div class="input-group ml-2" *ngIf="show_per_page">
+        <div class="dropdown" ngbDropdown>
+            <button class="btn btn-info btn-tn" type="button" ngbDropdownToggle>
+                <i class="ion-eye"></i> <span>{{baConfPage.per_page}}</span> por página <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" ngbDropdownMenu>
+                <li class="dropdown-item"
+                    *ngFor="let number of list_per_page"
+                    [ngClass]="{'active' : baConfPage.per_page == number }"
+                    (click)="changeOptions('per_page', number)"
+                >
+                    <i class="fa fa-check" *ngIf="baConfPage.per_page == number" style="margin: 0 5px 0 -15px;"></i>{{number}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="input-group ml-2" *ngIf="show_order">
+        <div class="dropdown" ngbDropdown>
+            <button class="btn btn-info btn-tn" type="button" ngbDropdownToggle>
+                <i class="ion-chevron-up"></i> <span>{{getOrderText(baConfPage.order)}}</span> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" ngbDropdownMenu>
+                <li class="dropdown-item"
+                    *ngFor="let order of list_order"
+                    [ngClass]="{'active' : baConfPage.order == order.value }"
+                    (click)="changeOptions('order', order.value)"
+                >
+                    <i class="fa fa-check" *ngIf="baConfPage.order == order.value" style="margin: 0 5px 0 -15px;"></i>{{order.text}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="input-group ml-2" *ngIf="show_export">
+        <button type="button" class="btn btn-info btn-tn" (click)="showModalExport()">
+            <i class="fa fa-file-excel-o"></i> <span>Exportar</span>
+        </button>
+    </div>
+</form>
+
+<!-- Small modal -->
+<div bsModal #customModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Exportar Clientes</h4>
+                <button class="close" aria-label="Close" (click)="cancel()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Exporte sus clientes por un rango de fecha, <br> seleccione la fecha inicial y final en el siguiente cuadro:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="text-center">Desde</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" (click)="d.toggle()" >
+                                    <i class="ion-calendar"></i>
+                                </span>
+                                <input ngbDatepicker
+                                       class="form-control"
+                                       [(ngModel)]="date_from"
+                                       [ngModelOptions]="{standalone: true}"  placeholder="dd-mm-yyyy" name="dp" #d="ngbDatepicker">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="text-center">Hasta</label>
+                            <div class="input-group">
+                                <div class="input-group-addon" (click)="e.toggle()" >
+                                    <i class="ion-calendar"></i>
+                                </div>
+                                <input ngbDatepicker
+                                       class="form-control"
+                                       [(ngModel)]="date_until"
+                                       [ngModelOptions]="{standalone: true}"  placeholder="dd-mm-yyyy" name="dp" #e="ngbDatepicker">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="msg_error" class="text-danger" style="padding-top: 20px;"><i class="fa fa-close"></i> {{msg_error}}</div>
+                <div *ngIf="msg_success" class="text-success" style="padding-top: 20px;"><i class="fa fa-check"></i> {{msg_success}}</div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="exporting" class="btn btn-primary confirm-btn" (click)="exportExcel()" ><i [ngClass]="exporting ? 'ion-refresh fa fa-spin' : 'fa fa-file-excel-o'"></i> Exportar</button>
+                <button [disabled]="disabled" class="btn btn-danger" (click)="cancel()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

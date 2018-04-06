@@ -1,0 +1,5 @@
+<select [id]="id" [disabled]="disabled">
+    <option *ngFor="let item of items" value="{{item.id}}">
+        {{item.text}}
+    </option>
+</select>

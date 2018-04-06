@@ -1,0 +1,27 @@
+Userw:
+    fields:
+        first_name:
+          schema: string:255
+          rules: required
+          tags: fillable
+        last_name:
+          schema: string
+          tags: fillable
+        gender:
+          schema: string
+          tags: fillable
+        email:
+          schema: string unique
+          rules: required email
+          tags: fillable
+        birthday:
+          schema: dateTime
+          tags: fillable
+        avatar:
+          schema: string
+          tags: fillable
+        password:
+          schema: string
+          rules: required
+          tags: fillable
+    add: timestamps softDeletes

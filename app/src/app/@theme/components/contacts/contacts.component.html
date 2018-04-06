@@ -1,0 +1,35 @@
+<nb-card>
+  <nb-card-header>
+    Contactos
+    <div class="pull-right">
+      <button (click)="addItem()" type="button" class="btn btn-tn btn-success"><i class="fa fa-plus"></i></button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-6"><label>Email o Telefono</label></div>
+      <div class="col-md-6"><label>Descripción</label></div>
+    </div>
+    <div class="row" *ngFor="let item of model; let idx = index">
+      <div class="col-md-6">
+        <div class="form-group">
+          <input type="text" class="form-control"
+                 [(ngModel)]="item['data']"
+                 [ngModelOptions]="{standalone: true}"
+                 id="contact_data" placeholder="Ingrese un Telefono o Email">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group input-group-sm">
+          <input type="text" class="form-control"
+                 [(ngModel)]="item['info']"
+                 [ngModelOptions]="{standalone: true}"
+                 id="contact_info" placeholder="Ingrese algun detalle">
+          <div class="input-group-btn" (click)="removeItem(idx)" >
+            <button type="button" class="btn btn-danger"><i class="fa fa-close"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

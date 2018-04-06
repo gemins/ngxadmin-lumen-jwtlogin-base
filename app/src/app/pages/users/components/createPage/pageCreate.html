@@ -1,0 +1,24 @@
+<form [formGroup]="formUser" (ngSubmit)="createData(formUser.value)">
+    <user-form [group]="formUser"></user-form>
+    <div class="row">
+        <div class="col-md-12" *ngIf="messageError">
+            <nb-card>
+                <nb-card-body>
+                    <div class="alert alert-danger" role="alert">
+                        <div [innerHTML]="messageError"></div>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-md-12">
+            <nb-card>
+                <nb-card-body>
+                    <div class="form-group text-right">
+                        <button type="submit" [disabled]="!formUser.valid || submitted" class="btn btn-success"><i [ngClass]="submitted ? 'ion-refresh fa fa-spin' : 'ion-compose'"></i> Crear</button>
+                        <button type="button" class="btn btn-primary ml-2" (click)="goBack()"><i class="ion-close-round"></i> Cancelar</button>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+        </div>
+    </div>
+</form>
