@@ -19,7 +19,10 @@ export class UserCreate {
     public formUser:FormGroup;
     public quotas;
 
-    constructor(private _router:Router, private route: ActivatedRoute, private apiService:ApiService, public fb: FormBuilder) {
+    constructor(private _router:Router, 
+                private route: ActivatedRoute, 
+                private apiService:ApiService, 
+                public fb: FormBuilder) {
     }
 
     ngOnInit() {
@@ -27,18 +30,23 @@ export class UserCreate {
     }
 
     createData(options):any {
-        this.submitted=true;
-        return new Promise((resolve, reject) => {
-            this.apiService.create(options, 'user')
-                .subscribe(
-                    result => {
-                        this._router.navigate(['../list'], {relativeTo: this.route});
-                    }, result => {
-                        this.messageError = this.apiService.getErrors(result);
-                        this.submitted=false;
-                    }
-                );
-        });
+        if(options.password != options.confirmation_password)
+            this.messageError = "Los passwords no coinciden";
+        else{
+            this.submitted = true;
+            return new Promise((resolve, reject) => {
+                this.apiService.create(options, 'user')
+                    .subscribe(
+                        result => {
+                            resolve(result);
+                            this._router.navigate(['../list'], {relativeTo: this.route});
+                        }, result => {
+                            this.messageError = this.apiService.getErrors(result);
+                            this.submitted = false;
+                        }
+                    );
+            });
+        }
     }
 
     goBack(){

@@ -23,12 +23,21 @@ export class ApiService {
         }
         return params;
     }
+    
+    private getUrlWhere(where){
+        let url = this.where[where];
+        if (url == undefined)
+            url = where;
+        return url
+    }
 
     public getAll(options, where) {
         let serializedForm;
         if(options && typeof options == 'object')
             serializedForm = "?"+this.serializeParams(options);
-        return this.http.get(SITE_URL + this.where[where] + serializedForm)
+        
+        let url = this.getUrlWhere(where);
+        return this.http.get(SITE_URL + url + serializedForm)
             .catch((error:any) => {
                 //this._baAlert.handlerErrorMsg(error);
                 return Observable.throw(error)
@@ -36,7 +45,8 @@ export class ApiService {
     }
 
     public getById(id: number, where) {
-        return this.http.get(SITE_URL + this.where[where] + '/' + id)
+        let url = this.getUrlWhere(where);
+        return this.http.get(SITE_URL + url + '/' + id)
             .catch((error:any) => {
                 //this._baAlert.handlerErrorMsg(error);
                 return Observable.throw(error)
@@ -44,7 +54,8 @@ export class ApiService {
     }
 
     public create(obj:any, where) {
-        return this.http.post(SITE_URL + this.where[where], obj)
+        let url = this.getUrlWhere(where);
+        return this.http.post(SITE_URL + url, obj)
             .catch((error:any) => {
                 //this._baAlert.handlerErrorMsg(error);
                 return Observable.throw(error)
@@ -52,7 +63,8 @@ export class ApiService {
     }
 
     public update(obj:any, where) {
-        return this.http.put(SITE_URL + this.where[where] + '/' + obj.id, obj)
+        let url = this.getUrlWhere(where);
+        return this.http.put(SITE_URL + url + '/' + obj.id, obj)
             .catch((error:any) => {
                 //this._baAlert.handlerErrorMsg(error);
                 return Observable.throw(error)
@@ -60,7 +72,8 @@ export class ApiService {
     }
 
     public clone(id: number, where) {
-        return this.http.get(SITE_URL + this.where[where] + '/' + id + '/clone')
+        let url = this.getUrlWhere(where);
+        return this.http.get(SITE_URL + url + '/' + id + '/clone')
             .catch((error:any) => {
                 //this._baAlert.handlerErrorMsg(error);
                 return Observable.throw(error)
@@ -68,7 +81,8 @@ export class ApiService {
     }
 
     public renew(id: number, where) {
-        return this.http.get(SITE_URL + this.where[where] + '/' + id + '/renew')
+        let url = this.getUrlWhere(where);
+        return this.http.get(SITE_URL + url + '/' + id + '/renew')
             .catch((error:any) => {
                 return Observable.throw(error)
             });
@@ -76,7 +90,8 @@ export class ApiService {
 
 
     public delete(id: number, where) {
-        return this.http.delete(SITE_URL + this.where[where] + '/' + id)
+        let url = this.getUrlWhere(where);
+        return this.http.delete(SITE_URL + url + '/' + id)
             .catch((error:any) => {
                 //this._baAlert.handlerErrorMsg(error);
                 return Observable.throw(error)
@@ -84,7 +99,8 @@ export class ApiService {
     }
 
     public destroy(id: number, where) {
-        return this.http.delete(SITE_URL + this.where[where] + '/' + id + '/destroy')
+        let url = this.getUrlWhere(where);
+        return this.http.delete(SITE_URL + url + '/' + id + '/destroy')
             .catch((error:any) => {
                 return Observable.throw(error)
             });

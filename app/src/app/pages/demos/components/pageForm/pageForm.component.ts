@@ -5,11 +5,11 @@ import {FormGroup, FormArray, FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 @Component({
-    selector: 'user-form',
+    selector: 'demo-form',
     styleUrls: ['./pageForm.scss'],
     templateUrl: './pageForm.html'
 })
-export class UserForm {
+export class DemoForm {
     @Input('group')
     public formGroup:FormGroup;
     public isCreation = false;
@@ -24,24 +24,4 @@ export class UserForm {
     }
 
     ngOnInit(){}
-
-    public defaultPicture = 'assets/img/theme/no-photo.png';
-    
-    changeValue(where, attr, values){
-        this.formGroup.controls[where].setValue(values[attr]);
-    }
-
-    handleChangeImage(file: File){
-        let myReader: FileReader = new FileReader();
-        let self = this;
-        myReader.onloadend = function (e) {
-            let avatarControl = self.formGroup.controls['avatar'];
-            let fbImg = {
-                type: file.type,
-                base64_image: myReader.result
-            };
-            avatarControl.setValue(fbImg);
-        };
-        myReader.readAsDataURL(file);
-    }
 }

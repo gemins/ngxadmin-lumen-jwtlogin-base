@@ -13,19 +13,15 @@
             <tr class="no-top-border">
               <th style="min-width:120px; max-width: 120px;">Acción</th>
               <th style="min-width:200px; max-width: 200px;">Nombre completo</th>
-              <th>Rol</th>
-              <th>Genero</th>
-              <th>Email</th>
-              <th>Nacimiento</th>
             </tr>
           </thead>
           <tbody *ngIf="asyncDataTable">
-            <tr *ngFor="let user of asyncDataTable | async | paginate: config" class="no-top-border">
+            <tr *ngFor="let demo of asyncDataTable | async | paginate: config" class="no-top-border">
               <td>
                 <span class="btn-inline">
                   <button class="btn btn-info btn-round btn-tn btn-icon"
                           type="button"
-                          (click)="editItem(user.id)">
+                          (click)="editItem(demo.id)">
                     <i class="ion-edit"></i>
                   </button>
                   <button class="btn btn-info btn-round btn-tn btn-icon"
@@ -35,16 +31,12 @@
                   </button>
                   <button class="btn btn-danger btn-round btn-tn btn-icon"
                           type="button"
-                          (click)="deleteModal.show(user.id)">
+                          (click)="deleteModal.show(demo.id)">
                     <i class="ion-android-close"></i>
                   </button>
                 </span>
               </td>
-              <td class="nowrap">{{user.first_name}} {{user.last_name}}</td>
-              <th>{{user.role}}</th>
-              <td class="text-center"><i [ngClass]="user.gender == 'female' ? 'ion-female' : 'ion-male'"></i> </td>
-              <td class="align-left">{{user.email}}</td>
-              <td class="align-left"> {{user.birthday}}</td>
+              <td class="nowrap">{{demo.name}}</td>
             </tr>
           </tbody>
         </table>

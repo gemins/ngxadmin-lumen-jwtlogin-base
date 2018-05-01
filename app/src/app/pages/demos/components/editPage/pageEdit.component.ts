@@ -2,28 +2,28 @@ import {Component, Input} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {FormGroup, AbstractControl, FormControl, FormBuilder, Validators} from '@angular/forms';
 import {ApiService} from '../../../../@core';
-import {User} from '../../../../@core/data/models';
+import {Demo} from '../../../../@core/data/models';
 
 @Component({
-    selector: 'user-edit',
+    selector: 'demo-edit',
     styleUrls: ['./pageEdit.scss'],
     templateUrl: './pageEdit.html'
 })
 
 @Input()
-export class UserEdit {
-    user = new User();
+export class DemoEdit {
+    demo = new Demo();
     submitted=false;
     messageError=null;
     id:null;
-    public formUser:FormGroup;
+    public formDemo:FormGroup;
     public quotas;
 
     constructor(private _router:Router,
                 private route: ActivatedRoute,
                 private apiService:ApiService,
                 public fb: FormBuilder) {
-        this.formUser =  this.fb.group(this.user.createFb());
+        this.formDemo =  this.fb.group(this.demo.createFb());
 
         const query = this.route.params.subscribe(params => {
             this.id = params['id'];
@@ -39,11 +39,11 @@ export class UserEdit {
 
     getData(id):any {
         return new Promise((resolve, reject) => {
-            this.apiService.getById(id, 'user')
+            this.apiService.getById(id, 'demo')
                 .subscribe(
                     result => {
-                        this.user = new User(result);
-                        this.formUser = this.fb.group(this.user.createFb());
+                        this.demo = new Demo(result);
+                        this.formDemo = this.fb.group(this.demo.createFb());
                         resolve();
                     }, result => {
                         this.messageError = this.apiService.getErrors(result);
@@ -54,11 +54,8 @@ export class UserEdit {
 
     updateData(options):any {
         this.submitted=true;
-        if(options['password'] == '')
-            delete options['password'];
-
         return new Promise((resolve, reject) => {
-            this.apiService.update(options, 'user')
+            this.apiService.update(options, 'demo')
                 .subscribe(
                     result => {
                         resolve(result);

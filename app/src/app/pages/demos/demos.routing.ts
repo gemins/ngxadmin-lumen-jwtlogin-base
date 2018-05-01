@@ -1,24 +1,24 @@
 import {Routes, RouterModule}  from '@angular/router';
 
-import {Users} from './users.component';
-import {UserTables} from './components/pageTables/table.component';
-import {UserCreate} from './components/createPage/pageCreate.component';
-import {UserEdit} from './components/editPage/pageEdit.component';
+import {Demos} from './demos.component';
+import {DemoTables} from './components/pageTables/table.component';
+import {DemoCreate} from './components/createPage/pageCreate.component';
+import {DemoEdit} from './components/editPage/pageEdit.component';
 
 // noinspection TypeScriptValidateTypes
 const routes:Routes = [
     {
         path: '',
-        component: Users,
+        component: Demos,
         children: [{
             path: 'list',
-            component: UserTables,
+            component: DemoTables,
         }, {
             path: 'create',
-            component: UserCreate,
+            component: DemoCreate,
         }, {
             path: 'edit',
-            component: UserEdit,
+            component: DemoEdit,
         }, {path: '', redirectTo: 'list',pathMatch: 'full'}
         ]
     }

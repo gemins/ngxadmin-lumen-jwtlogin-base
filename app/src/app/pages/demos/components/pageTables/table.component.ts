@@ -1,6 +1,6 @@
 import {Component, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {UserTablesService} from './table.service';
+import {DemoTablesService} from './table.service';
 import {PaginationInstance} from 'ngx-pagination';
 import {Observable} from 'rxjs/Observable';
 import {ApiService} from '../../../../@core';
@@ -9,11 +9,11 @@ import {CustomModalComponent} from '../../../../@theme/components';
 
 
 @Component({
-    selector: 'user-tables',
+    selector: 'demo-tables',
     templateUrl: './table.html',
     styleUrls: ['./table.scss'],
 })
-export class UserTables {
+export class DemoTables {
     @ViewChild('deleteModal') deleteModal:CustomModalComponent;
     @ViewChild('cloneModal') cloneModal: CustomModalComponent;
 
@@ -34,7 +34,7 @@ export class UserTables {
         totalItems: 0
     };
 
-    constructor(private service:UserTablesService,
+    constructor(private service:DemoTablesService,
                 private router:Router, private route:ActivatedRoute,
                 private apiService:ApiService,
                 public userService:UserService) {
@@ -58,7 +58,7 @@ export class UserTables {
         this.config.currentPage = page;
         this.config.itemsPerPage = this.options.per_page;
 
-        this.asyncDataTable = this.service.getAllUsers(this.options).then((data) => {
+        this.asyncDataTable = this.service.getAllDemos(this.options).then((data) => {
             this.loading = false;
             this.config.totalItems = data.total;
             return data.data;
