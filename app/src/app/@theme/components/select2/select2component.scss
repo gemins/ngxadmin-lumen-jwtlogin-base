@@ -1,19 +1,16 @@
+@import '../../../@theme/styles/themes';
+
 select2-component{
-  &.invalid{
-    .select2-container{
-      .select2-selection.select2-selection--single{
-        border-color: red !important;
+  .select2-container{
+    .select2-selection{
+      &.select2-selection--single{
+        height: 42px !important;
+        border: 2px solid;
+        border-color: #dadfe6;
       }
     }
   }
 
-  .select2-container{
-    .select2-selection.select2-selection--single{
-      height: 42px !important;
-      border: 2px solid !important;
-      border-color:#dadfe6 !important;
-    }
-  }
   .select2-container--default{
     .select2-selection--single{
 
@@ -28,6 +25,25 @@ select2-component{
         color: #2b2b2b !important;
         line-height: 36px !important;
         padding-left: 8px !important;
+      }
+    }
+    .select2-selection--multiple{
+      border: 2px solid #dadfe6 !important;
+      min-height: 42px !important;
+
+      .select2-selection__rendered{
+        min-height: 28px;
+        line-height: 28px;
+      }
+    }
+  }
+
+  .invalid{
+    .select2-container{
+      .select2-selection{
+        &.select2-selection--single{
+          border-color: nb-theme(color-danger);
+        }
       }
     }
   }
