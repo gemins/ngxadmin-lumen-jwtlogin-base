@@ -1,9 +1,11 @@
 <div class="row">
   <div class="col-md-12 col-table">
-    <nb-card title="Clientes">
+    <nb-card>
       <nb-card-header>
-        <span>Usuarios</span>
-        <span class="pull-right"><button class="btn btn-success btn-tn btn-with-icon" ><i class="ion-plus"></i> Nuevo</button></span>
+        <span>Demo</span>
+        <span class="pull-right">
+          <button routerLink="../create" class="btn btn-tn btn-success"><i class="fi-plus-circle"></i> Nuevo</button>
+        </span>
       </nb-card-header>
       <nb-card-body>
         <search-box (onChangeValue)="getPage(1, $event)" (onOptionChange)="refreshPage($event)" [baConfPage]="options" [show]="{export : true}"></search-box>

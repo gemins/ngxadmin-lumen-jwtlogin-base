@@ -24,4 +24,45 @@ export class DemoForm {
     }
 
     ngOnInit(){}
+
+    fileChange(event) {
+        const fileList: FileList = event.target.files;
+        const myReader: FileReader = new FileReader();
+        if (fileList.length > 0) {
+            const file: File = fileList[0];
+            const _this = this;
+            myReader.onloadend = function (e) {
+                const dsControl = _this.formGroup.controls['data_sheet'];
+                const fbFile = {
+                    name: file.name,
+                    type: file.type,
+                    base64_file: myReader.result,
+                };
+                dsControl.setValue(fbFile);
+            };
+            myReader.readAsDataURL(file);
+        }
+    }
+
+    handleChangeImage(file: File, where: string){
+        let myReader: FileReader = new FileReader();
+        let _this = this;
+        myReader.onloadend = function (e) {
+            let imageControl = _this.formGroup.controls[where];
+            let fbImg = {
+                type: file.type,
+                base64_image: myReader.result
+            };
+            imageControl.setValue(fbImg);
+        };
+        myReader.readAsDataURL(file);
+    }
+
+    changeSelect2Data(where, data, attr=null){
+        const item = this.formGroup.controls[where];
+        if(attr)
+            item.setValue(data[attr]);
+        else
+            item.setValue(data);
+    }
 }

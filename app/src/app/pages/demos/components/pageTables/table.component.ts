@@ -43,6 +43,8 @@ export class DemoTables {
     ngOnInit() {
         this.getPage(1);
     }
+    
+    
 
     refreshPage(options) {
         this.options = options;
