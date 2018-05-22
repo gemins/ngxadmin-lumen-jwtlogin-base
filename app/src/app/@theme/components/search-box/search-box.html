@@ -1,8 +1,8 @@
 <form (ngSubmit)="searching()" class="form-inline" >
-    <div class="input-group">
+    <div class="input-group input-group-sm">
         <input type="text" class="form-control text-sm" value="" [(ngModel)]="baSearch" [ngModelOptions]="{standalone: true}"  placeholder="Buscar..."/>
         <span class="input-group-btn">
-            <button type="button" class="btn btn-info btn-icon">
+            <button type="button" class="btn btn-info btn-icon" (click)="searching()">
                 <i class="nb-search"></i>
             </button>
         </span>
@@ -42,6 +42,11 @@
     <div class="input-group ml-2" *ngIf="show_export">
         <button type="button" class="btn btn-info btn-tn" (click)="showModalExport()">
             <i class="fa fa-file-excel-o"></i> <span>Exportar</span>
+        </button>
+    </div>
+    <div class="input-group ml-2" *ngIf="customButton.show">
+        <button type="button" class="btn btn-info btn-tn" (click)="customButtonAction()">
+            <i [class]="customButton.class"></i> <span>{{customButton.text}}</span>
         </button>
     </div>
 </form>

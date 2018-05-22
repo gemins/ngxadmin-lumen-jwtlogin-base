@@ -18,6 +18,12 @@ export class SearchBox {
         q: '',
         order: 'desc'
     };
+    @Input() customButton:any = {
+        show : false,
+        text : '',
+        class : ''
+    }
+    @Output() onCustomButton = new EventEmitter<any>();
     @Output() onOptionChange = new EventEmitter<any>();
     @Output() onChangeValue = new EventEmitter<any>();
 
@@ -53,6 +59,10 @@ export class SearchBox {
     changeOptions(option, value){
         this.baConfPage[option] = value;
         this.onOptionChange.emit(this.baConfPage);
+    }
+
+    customButtonAction(){
+        this.onCustomButton.emit();
     }
 
     searching(){
