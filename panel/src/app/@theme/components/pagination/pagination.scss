@@ -4,5 +4,8 @@ pagination-component{
     .btn:not(:hover):not(.active){
       background: white !important;
     }
+    .btn{
+      padding: 7px 12px;
+    }
   }
 }

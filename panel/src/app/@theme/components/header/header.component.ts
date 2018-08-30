@@ -4,6 +4,7 @@ import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { LayoutService } from '../../../@core/data/layout.service';
+import { SITE_CONF } from '../../../@core/core.constants';
 
 @Component({
   selector: 'ngx-header',
@@ -15,6 +16,8 @@ export class HeaderComponent implements OnInit {
   @Input() position = 'normal';
 
   user: any;
+
+  siteConf:any=SITE_CONF;
 
   userMenu = [
     { title: 'Perfil', link: ['/pages/users/edit', {id: this.userService.user.id}] },
