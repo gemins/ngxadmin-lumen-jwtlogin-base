@@ -1,0 +1,7 @@
+<div class="container-select" [class.invalid]="invalid">
+    <select [id]="id" [disabled]="disabled" [multiple]="multiple">
+        <option *ngFor="let item of items" value="{{item.id}}">
+            {{item.text}}
+        </option>
+    </select>
+</div>

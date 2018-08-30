@@ -1,1 +1,0 @@
-export * from './pageCreate.component';

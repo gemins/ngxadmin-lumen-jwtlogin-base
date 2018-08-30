@@ -1,0 +1,76 @@
+@import '../../../@theme/styles/themes';
+
+select2-component{
+  .select2-container{
+    .select2-selection{
+      &.select2-selection--single{
+        height: 42px !important;
+        border: 2px solid;
+        border-color: #dadfe6;
+      }
+    }
+  }
+
+  .select2-container--default{
+    .select2-selection--single{
+
+      .select2-selection__arrow{
+        height: 40px !important;
+        b {
+          border-color: #2b2b2b transparent transparent transparent;
+        }
+      }
+
+      .select2-selection__rendered{
+        color: #2b2b2b !important;
+        line-height: 36px !important;
+        padding-left: 8px !important;
+      }
+    }
+    .select2-selection--multiple{
+      border: 2px solid #dadfe6 !important;
+      min-height: 42px !important;
+
+      .select2-selection__rendered{
+        min-height: 28px;
+        line-height: 28px;
+      }
+    }
+  }
+
+  &.sm{
+    .select2-container{
+      .select2-selection{
+        &.select2-selection--single{
+          height: 37px !important;
+
+          .select2-selection__arrow{
+            height: 34px !important;
+          }
+        }
+      }
+    }
+  }
+
+  .invalid{
+    .select2-container{
+      .select2-selection{
+        &.select2-selection--single{
+          border-color: nb-theme(color-danger);
+        }
+      }
+    }
+  }
+}
+
+.input-group{
+  select2-component.form-control{
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    .select2-selection--single{
+      border-radius: 4px 0 0 4px;
+    }
+  }
+}
