@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxAuthComponent, NgxLoginComponent, NgxAuthBlockComponent } from './components/auth/';
+import { NgxAuthComponent, NgxLoginComponent, NgxAuthBlockComponent } from '../auth/components';
 import { RouterModule } from '@angular/router';
 
 //Extra modules
@@ -25,7 +25,24 @@ import {
   NbPopoverModule,
   NbContextMenuModule,
   NbProgressBarModule,
-  NbSpinnerModule
+  NbCalendarModule,
+  NbCalendarRangeModule,
+  NbStepperModule,
+  NbButtonModule,
+  NbInputModule,
+  NbAccordionModule,
+  NbDatepickerModule,
+  NbDialogModule,
+  NbWindowModule,
+  NbListModule,
+  NbToastrModule,
+  NbAlertModule,
+  NbSpinnerModule,
+  NbRadioModule,
+  NbSelectModule,
+  NbChatModule,
+  NbTooltipModule,
+  NbCalendarKitModule,
 } from '@nebular/theme';
 
 import { NbSecurityModule } from '@nebular/security';
@@ -40,11 +57,11 @@ import {
   ThemeSwitcherComponent,
   TinyMCEComponent,
   ThemeSwitcherListComponent,
-    CustomModalComponent,
-    SearchBox,
-    PictureUploader,
-    PaginationComponent,
-    Select2Component,
+  CustomModalComponent,
+  SearchBox,
+  PictureUploader,
+  PaginationComponent,
+  Select2Component,
 } from './components';
 import {
   CapitalizePipe,
@@ -52,6 +69,7 @@ import {
   RoundPipe,
   TimingPipe,
   NumberWithCommasPipe,
+  EvaIconsPipe,
 } from './pipes';
 import {
   OneColumnLayoutComponent,
@@ -88,7 +106,24 @@ const NB_MODULES = [
   NgbModule,
   NbSecurityModule, // *nbIsGranted directive,
   NbProgressBarModule,
-  NbSpinnerModule
+  NbCalendarModule,
+  NbCalendarRangeModule,
+  NbStepperModule,
+  NbButtonModule,
+  NbListModule,
+  NbToastrModule,
+  NbInputModule,
+  NbAccordionModule,
+  NbDatepickerModule,
+  NbDialogModule,
+  NbWindowModule,
+  NbAlertModule,
+  NbSpinnerModule,
+  NbRadioModule,
+  NbSelectModule,
+  NbChatModule,
+  NbTooltipModule,
+  NbCalendarKitModule,
 ];
 
 const COMPONENTS = [
@@ -117,9 +152,9 @@ const ENTRY_COMPONENTS = [
 ];
 
 const AUTH_COMPONENTS = [
-  NgxAuthBlockComponent,
-  NgxLoginComponent,
-  NgxAuthComponent
+//  NgxAuthBlockComponent,
+//  NgxLoginComponent,
+//  NgxAuthComponent
 ];
 
 const PIPES = [
@@ -128,6 +163,7 @@ const PIPES = [
   RoundPipe,
   TimingPipe,
   NumberWithCommasPipe,
+  EvaIconsPipe,
 ];
 
 const IMPORT_MOD = [
@@ -159,6 +195,13 @@ const NB_THEME_PROVIDERS = [
   ).providers,
   ...NbSidebarModule.forRoot().providers,
   ...NbMenuModule.forRoot().providers,
+  ...NbDatepickerModule.forRoot().providers,
+  ...NbDialogModule.forRoot().providers,
+  ...NbWindowModule.forRoot().providers,
+  ...NbToastrModule.forRoot().providers,
+  ...NbChatModule.forRoot({
+    messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
+  }).providers,
 ];
 
 @NgModule({

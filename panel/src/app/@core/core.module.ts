@@ -44,7 +44,6 @@ export const NB_CORE_PROVIDERS = [
         name: 'email',
         baseEndpoint: SITE_URL + 'auth',
         login: {
-          rememberMe: true,
           endpoint: '/login',
           defaultErrors: ['Username o Password son incorrectos, por favor intenta nuevamente.'],
           defaultMessages: ['Has logueado satisfactoriamente!'],
@@ -61,6 +60,11 @@ export const NB_CORE_PROVIDERS = [
     ],
     forms: {
       login: {
+        rememberMe: true,
+        showMessages: {     // show/not show success/error messages
+          success: true,
+          error: true,
+        },
         socialLinks: socialLinks,
       },
       register: {
