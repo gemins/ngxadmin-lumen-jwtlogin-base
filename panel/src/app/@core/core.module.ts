@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
-import { of as observableOf } from 'rxjs';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { DataModule } from './data/data.module';
 import { AnalyticsService } from './utils/analytics.service';
 import { AuthGuard, AuthInterceptor } from './interceptors';
+import { NgxRoleProvider } from '../auth/role.provider';
 import { SITE_URL } from './core.constants';
 
 const socialLinks = [
@@ -27,13 +27,6 @@ const socialLinks = [
     icon: 'socicon-twitter',
   },
 ];
-
-export class NbSimpleRoleProvider extends NbRoleProvider {
-  getRole() {
-    // here you could provide any role based on any auth flow
-    return observableOf('guest');
-  }
-}
 
 export const NB_CORE_PROVIDERS = [
   ...DataModule.forRoot().providers,
@@ -84,11 +77,19 @@ export const NB_CORE_PROVIDERS = [
         edit: '*',
         remove: '*',
       },
+      moderator: {
+        parent: 'user',
+        remove: '*',
+      },
+      Root: {
+        parent: 'moderator',
+        remove: '*',
+      },
     },
   }).providers,
 
   {
-    provide: NbRoleProvider, useClass: NbSimpleRoleProvider,
+    provide: NbRoleProvider, useClass: NgxRoleProvider,
   },
   AnalyticsService,
   AuthGuard,

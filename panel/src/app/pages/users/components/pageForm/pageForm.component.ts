@@ -21,7 +21,7 @@ export class UserForm {
         this.apiService.getAll({}, 'role').subscribe(
             (result) => {this.roles = result['data'];},
             (error) => {console.log(error);}
-        );
+        );        
     }
 
     ngOnInit(){
