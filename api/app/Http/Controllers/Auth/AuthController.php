@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,13 +27,11 @@ class AuthController extends Controller
         $this->validate($request, ['email'    => 'required|max:255', 'password' => 'required']);
 
         try {
-            if (! $token = $this->jwt->attempt($request->only('email', 'password')))
+            $user = User::where("email", $request->input("email"))->first();
+            if (!$user || !$token = Auth::claims(["role" => $user->role])->attempt($request->only('email', 'password')))
                 return response()->json(['invalid_credentials'], 404);
 
-            if($token)
-                $this->jwt->setToken($token);
-            
-            $user =  $this->jwt->authenticate();
+            $user = $this->jwt->setToken($token)->user();
 
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
             return response()->json(['token_expired'], 500);

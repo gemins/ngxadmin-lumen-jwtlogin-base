@@ -62,7 +62,8 @@ class UsersController extends Controller {
                 $data["password"] = app('hash')->make($data["password"]);
             }
 
-            $model->roles()->sync($data["role"]);
+            if($data["role"])
+                $model->roles()->sync($data["role"]);
 
             $model->update($data);
             return $this->respond(Response::HTTP_OK, $model);
