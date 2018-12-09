@@ -1,10 +1,10 @@
 # Panel Administrador Base creado con Angular + Lumen + JWT
-## Akveo ngx-admin + Lumen 5.6 + JWT 1.0-rc2
+## Akveo ngx-admin v3 + Lumen 5.7 + JWT 1.0-rc3
 
 [![License](http://manu.cloud/wp-content/uploads/2017/03/manucloud_creador.png)](https://manu.cloud)
 [![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://opensource.org/licenses/MIT)
 
-Este repositorio cuenta con la version de Lumen 5.6 + JWT 1.0-rc2 para login de usuario y panel Akveo Ngx-admin, listo para clonar e iniciar todos tus proyectos.
+Este repositorio cuenta con la version de Lumen 5.7 + JWT 1.0-rc3 para login de usuario y panel Akveo Ngx-admin v3, listo para clonar e iniciar todos tus proyectos.
 
 ## Instalación y configuración
 
