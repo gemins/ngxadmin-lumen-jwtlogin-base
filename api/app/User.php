@@ -4,19 +4,19 @@ namespace App;
 
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use Jenssegers\Mongodb\Eloquent\SoftDeletes as SoftDeletes;
 
-class User extends Model implements JWTSubject, AuthenticatableContract, AuthorizableContract
+class User extends Eloquent implements JWTSubject, AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ["first_name", "last_name", "gender", "email", "birthday", "avatar", "password"];
+    protected $fillable = ["first_name", "last_name", "gender", "email", "birthday", "avatar", "password", "company_id"];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -25,6 +25,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
      */
     protected $hidden = [
         'password',
+        'role_id',
     ];
 
 
@@ -48,14 +49,36 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
         'email' => 'El email es requerido',
     ];
 
-    protected $appends = ['role'];
+    protected $appends = ['text', 'role', 'role_name'];
+
+    public function getTextAttribute(){
+        return $this->first_name . " " . $this->last_name;
+    }
 
     public function getRoleAttribute(){
+        $role = $this->roles()->first();
+        return $role ? $role->type : null;
+    }
+
+    public function getRoleNameAttribute(){
         $role = $this->roles()->first();
         return $role ? $role->name : null;
     }
 
     public function roles(){
-        return $this->belongsToMany("App\Role", "user_roles");
+        return $this->belongsToMany( "App\Role", "user_role", "user_id", "role_id");
+    }
+
+    public function hasRole($role){
+        return $this->hasRoles([$role]);
+    }
+
+    public function hasRoles($roles)
+    {
+        foreach ($roles as $role){
+            if($this->roles()->get()->contains("type", $role))
+                return true;
+        }
+        return false;
     }
 }

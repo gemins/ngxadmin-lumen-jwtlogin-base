@@ -52,7 +52,7 @@ $router->group(['prefix' => 'v1'], function($router)
         $router->post('/logout', 'AuthController@logout');
     });
 
-    $router->group(['middleware' => 'auth:api'], function($router)
+    $router->group(['middleware' => ['auth:api','role:admin|root']], function($router)
     {
         $router->get('/me/data', 'UsersController@getSelfData');
 

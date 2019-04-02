@@ -4,17 +4,27 @@ use App\Libraries\Helpers;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Tymon\JWTAuth\JWTAuth;
 
 trait RESTActions {
+
+    protected $jwt;
+    protected $user;
+
+    public function __construct(JWTAuth $jwt)
+    {
+        $this->jwt = $jwt;
+        $this->user = $this->jwt->parseToken()->authenticate();
+    }
 
 
     public function all(Request $request)
     {
         try{
             //Queries
-            $per_page = $request->get("per_page") ? $request->get("per_page") : 10;
+            $per_page = $request->get("per_page") ? (int) $request->get("per_page") : 10;
             $order = $request->get("order") ? $request->get("order") : 'desc';
-            $order_by = $request->get("order_by") ? $request->get("order_by") : 'id';
+            $order_by = $request->get("order_by") ? $request->get("order_by") : '_id';
             $search = $request->get("q");
 
             //Model to get fillables
@@ -36,7 +46,7 @@ trait RESTActions {
                     if($search){
                         foreach($newM->getFillable() as $column)
                         {
-                            if($column != 'id')
+                            if($column != '_id')
                                 $query->orWhere($column, 'like', '%'.$search.'%');
                         }
                     }
@@ -56,8 +66,8 @@ trait RESTActions {
             if(is_null($model))
                 return $this->respond(Response::HTTP_NOT_FOUND);
 
-            //if(($this->access->isOwner || $this->access->isSeller) && $model->user_id != $this->access->authUser->id)
-            //    return $this->isUnauthorized();
+            if($model && method_exists($model, 'getRelationshipsAttributes'))
+                $model->getRelationshipsAttributes();
 
             return $this->respond(Response::HTTP_OK, $model);
         }catch(\ErrorException $e) {
@@ -70,7 +80,11 @@ trait RESTActions {
         try{
             $m = self::MODEL;
             Helpers::validate($request, $m::$rules, $m::$messages);
-            return $this->respond(Response::HTTP_CREATED, $m::create($request->all()));
+            $data = $request->all();
+            $data["company_id"] = $this->user->company_id;
+            $data["owner_id"] = $this->user->id;
+
+            return $this->respond(Response::HTTP_CREATED, $m::create($data));
         }catch(HttpResponseException $e){
             return $e->getResponse();
         }catch(\ErrorException $e) {
@@ -93,7 +107,11 @@ trait RESTActions {
             //if(($this->access->isOwner || $this->access->isSeller) && $model->user_id != $this->access->authUser->id)
             //    return $this->isUnauthorized();
 
-            $model->update($request->all());
+            $data = $request->all();
+            $data["company_id"] = $this->user->company_id;
+            $data["owner_id"] = $this->user->id;
+
+            $model->update($data);
             return $this->respond(Response::HTTP_OK, $model);
         }catch(HttpResponseException $e){
             return $e->getResponse();
@@ -145,5 +163,5 @@ trait RESTActions {
     {
         return response()->json('Access Unauthorized.', 401);
     }
-    
+
 }

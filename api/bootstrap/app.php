@@ -3,7 +3,9 @@
 require_once __DIR__.'/../vendor/autoload.php';
 
 try {
-    (new Dotenv\Dotenv(__DIR__.'/../'))->load();
+    (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
+        dirname(__DIR__)
+    ))->bootstrap();
 } catch (Dotenv\Exception\InvalidPathException $e) {
     //
 }
@@ -23,9 +25,11 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
- $app->withFacades();
+$app->withFacades();
 
- $app->withEloquent();
+$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
+
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +69,7 @@ $app->middleware([
 
  $app->routeMiddleware([
      'auth' => App\Http\Middleware\Authenticate::class,
+     'role' => App\Http\Middleware\RoleMiddleware::class,
  ]);
 
 /*
@@ -89,11 +94,10 @@ $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Wn\Generators\CommandsServiceProvider::class);
 $app->register(Intervention\Image\ImageServiceProviderLumen::class);
 $app->register(Vluzrmos\Tinker\TinkerServiceProvider::class);
-$app->register(\Barryvdh\DomPDF\ServiceProvider::class);
-$app->register(\Maatwebsite\Excel\ExcelServiceProvider::class);
+$app->register(GrahamCampbell\Flysystem\FlysystemServiceProvider::class);
+
 //Alias
 $app->alias('mailer', \Illuminate\Contracts\Mail\Mailer::class);
-$app->alias('Excel', \Maatwebsite\Excel\Facades\Excel::class);
 $app->alias('mailer', \Illuminate\Contracts\Mail\Mailer::class);
 
 /*

@@ -1,10 +1,10 @@
 <?php
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use Jenssegers\Mongodb\Eloquent\SoftDeletes as SoftDeletes;
 
-class Role extends Model
+class Role extends Eloquent
 {
     use SoftDeletes;
     protected $dates = ['deleted_at'];
@@ -12,6 +12,6 @@ class Role extends Model
     protected $fillable = ["name"];
 
     public function user(){
-        return $this->belongsToMany("App\User", "user_id");
+        return $this->belongsToMany('App\User', "user_role", "role_id", "user_id");
     }
 }
