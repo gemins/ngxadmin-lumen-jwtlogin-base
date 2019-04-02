@@ -35,7 +35,7 @@ export const NB_CORE_PROVIDERS = [
     strategies: [
       NbPasswordAuthStrategy.setup({
         name: 'email',
-        baseEndpoint: SITE_URL + 'auth',
+        baseEndpoint: SITE_URL + 'v1/auth',
         login: {
           endpoint: '/login',
           defaultErrors: ['Username o Password son incorrectos, por favor intenta nuevamente.'],

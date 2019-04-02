@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {ApiService} from '../../../../@core';
 import {UserService} from '../../../../@core/data/users.service';
 import {FormGroup, FormArray, FormBuilder, Validators} from '@angular/forms';
@@ -11,6 +11,7 @@ import {Router} from '@angular/router';
 })
 export class UserForm {
     @Input() spinner = false;
+    @Output() invalidForm = new EventEmitter<any>();
     @Input('group')
     public formGroup:FormGroup;
     public isCreation = false;

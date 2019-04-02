@@ -1,14 +1,14 @@
 # Panel Administrador Base creado con Angular + Lumen + JWT
-## Akveo ngx-admin v3 + Lumen 5.7 + JWT 1.0-rc3
+## Akveo ngx-admin v3 + Lumen 5.8 + JWT 1.0-rc4 + MongoDB
 
 [![License](http://manu.cloud/wp-content/uploads/2017/03/manucloud_creador.png)](https://manu.cloud)
 [![License](https://poser.pugx.org/laravel/lumen-framework/license.svg)](https://opensource.org/licenses/MIT)
 
-Este repositorio cuenta con la version de Lumen 5.7 + JWT 1.0-rc3 para login de usuario y panel Akveo Ngx-admin v3, listo para clonar e iniciar todos tus proyectos.
+Este repositorio cuenta con la version de Lumen 5.8 + JWT 1.0-rc4 para login de usuario y panel Akveo Ngx-admin v3, listo para clonar e iniciar todos tus proyectos.
 
 ## Instalación y configuración
 
-1. Ingresar a 'app' y correr:
+1. Ingresar a 'panel' y correr:
 ```sh
 npm install
 ```
@@ -21,23 +21,16 @@ composer update
 php -S localhost:8000 -t public
 ```
 4. Una vez iniciado el servidor del respositorio, ingresa a la ruta <a target="_blank" href="http://localhost:8000/key">http://localhost:8000/key</a> para copiar la clave de 32 chars y luego pegarlo en tu archivo .env (APP_KEY).
-5. Rellenar tu archivo .env con los datos de tu base de datos.
+5. Rellenar tu archivo .env con los datos de tu base de datos (basado en MongoDB).
 5. Corre las migraciones y las semillas:
 
 ```sh
-php artisan migrate
 php artisan db:seed
 ```
 
 4. Listo! Configura tu Lumen y Panel a gusto.
 
 [![N|Solid](http://manu.cloud/wp-content/uploads/2017/03/manucloud_createby.png)](https://manu.cloud)
-
-Las instrucciones para generar este proyecto las podras encontrar aquí:
-http://manu.cloud/framework/lumen/inicio-de-sesion-con-jwt-en-lumen/
-
-Si deseas aprender a instalar Lumen desde cero:
-http://manu.cloud/framework/lumen/como-instalar-lumen-5-4-en-nuestro-localhost/
 
 # Creditos y Plataformas
 

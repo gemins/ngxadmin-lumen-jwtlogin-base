@@ -2,7 +2,6 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxAuthComponent, NgxLoginComponent, NgxAuthBlockComponent } from '../auth/components';
 import { RouterModule } from '@angular/router';
 
 //Extra modules
@@ -63,6 +62,7 @@ import {
   PaginationComponent,
   Select2Component,
 } from './components';
+
 import {
   CapitalizePipe,
   PluralPipe,
@@ -71,12 +71,21 @@ import {
   NumberWithCommasPipe,
   EvaIconsPipe,
 } from './pipes';
+
+import {
+    EmailValidator,
+    EqualPasswordsValidator,
+    DateValidator
+} from './validators';
+
+
 import {
   OneColumnLayoutComponent,
   SampleLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
 } from './layouts';
+
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
@@ -151,12 +160,6 @@ const ENTRY_COMPONENTS = [
   ThemeSwitcherListComponent,
 ];
 
-const AUTH_COMPONENTS = [
-//  NgxAuthBlockComponent,
-//  NgxLoginComponent,
-//  NgxAuthComponent
-];
-
 const PIPES = [
   CapitalizePipe,
   PluralPipe,
@@ -164,6 +167,12 @@ const PIPES = [
   TimingPipe,
   NumberWithCommasPipe,
   EvaIconsPipe,
+];
+
+const VALIDATORS = [
+  EmailValidator,
+  EqualPasswordsValidator,
+  DateValidator
 ];
 
 const IMPORT_MOD = [
@@ -207,14 +216,17 @@ const NB_THEME_PROVIDERS = [
 @NgModule({
   imports: [...BASE_MODULES, ...NB_MODULES, ...IMPORT_MOD, RouterModule],
   exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS, ...PIPES, ...EXPORT_MOD],
-  declarations: [...COMPONENTS, ...PIPES, AUTH_COMPONENTS],
+  declarations: [...COMPONENTS, ...PIPES],
   entryComponents: [...ENTRY_COMPONENTS],
 })
 export class ThemeModule {
   static forRoot(): ModuleWithProviders {
     return <ModuleWithProviders>{
       ngModule: ThemeModule,
-      providers: [...NB_THEME_PROVIDERS],
+      providers: [
+        ...NB_THEME_PROVIDERS,
+        ...VALIDATORS
+      ],
     };
   }
 }

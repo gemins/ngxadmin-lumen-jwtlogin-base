@@ -6,13 +6,14 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Injectable()
 export class ApiService {
+    base_version = "v1/";
     where = {
         user : "admin/user",
         role : "admin/role",
     };
 
     apiUrl = SITE_URL;
-    
+
     constructor(private http: HttpClient, private _sanitizer:DomSanitizer) { }
 
     serializeParams(obj): URLSearchParams{
@@ -23,7 +24,7 @@ export class ApiService {
         }
         return params;
     }
-    
+
     private getUrlWhere(where){
         let url = this.where[where];
         if (url == undefined)
@@ -35,9 +36,9 @@ export class ApiService {
         let serializedForm;
         if(options && typeof options == 'object')
             serializedForm = "?"+this.serializeParams(options);
-        
+
         let url = this.getUrlWhere(where);
-        return this.http.get(SITE_URL + url + serializedForm)
+        return this.http.get(SITE_URL + this.base_version + url + serializedForm)
             .catch((error:any) => {
                 //this._baAlert.handlerErrorMsg(error);
                 return Observable.throw(error)
@@ -46,7 +47,7 @@ export class ApiService {
 
     public getById(id: number, where) {
         let url = this.getUrlWhere(where);
-        return this.http.get(SITE_URL + url + '/' + id)
+        return this.http.get(SITE_URL + this.base_version + url + '/' + id)
             .catch((error:any) => {
                 //this._baAlert.handlerErrorMsg(error);
                 return Observable.throw(error)
@@ -55,7 +56,7 @@ export class ApiService {
 
     public create(obj:any, where) {
         let url = this.getUrlWhere(where);
-        return this.http.post(SITE_URL + url, obj)
+        return this.http.post(SITE_URL + this.base_version + url, obj)
             .catch((error:any) => {
                 //this._baAlert.handlerErrorMsg(error);
                 return Observable.throw(error)
@@ -64,7 +65,7 @@ export class ApiService {
 
     public update(obj:any, where) {
         let url = this.getUrlWhere(where);
-        return this.http.put(SITE_URL + url + '/' + obj.id, obj)
+        return this.http.put(SITE_URL + this.base_version + url + '/' + obj._id, obj)
             .catch((error:any) => {
                 //this._baAlert.handlerErrorMsg(error);
                 return Observable.throw(error)
@@ -73,7 +74,7 @@ export class ApiService {
 
     public clone(id: number, where) {
         let url = this.getUrlWhere(where);
-        return this.http.get(SITE_URL + url + '/' + id + '/clone')
+        return this.http.get(SITE_URL + this.base_version + url + '/' + id + '/clone')
             .catch((error:any) => {
                 //this._baAlert.handlerErrorMsg(error);
                 return Observable.throw(error)
@@ -82,7 +83,7 @@ export class ApiService {
 
     public renew(id: number, where) {
         let url = this.getUrlWhere(where);
-        return this.http.get(SITE_URL + url + '/' + id + '/renew')
+        return this.http.get(SITE_URL + this.base_version + url + '/' + id + '/renew')
             .catch((error:any) => {
                 return Observable.throw(error)
             });
@@ -91,7 +92,7 @@ export class ApiService {
 
     public delete(id: number, where) {
         let url = this.getUrlWhere(where);
-        return this.http.delete(SITE_URL + url + '/' + id)
+        return this.http.delete(SITE_URL + this.base_version + url + '/' + id)
             .catch((error:any) => {
                 //this._baAlert.handlerErrorMsg(error);
                 return Observable.throw(error)
@@ -100,7 +101,7 @@ export class ApiService {
 
     public destroy(id: number, where) {
         let url = this.getUrlWhere(where);
-        return this.http.delete(SITE_URL + url + '/' + id + '/destroy')
+        return this.http.delete(SITE_URL + this.base_version + url + '/' + id + '/destroy')
             .catch((error:any) => {
                 return Observable.throw(error)
             });
@@ -108,7 +109,7 @@ export class ApiService {
 
     public exportExcel(date_from, date_until, where) {
         return this.http.post(SITE_URL + this.where[where] + '/export', {from_date: date_from, until_date : date_until}, { responseType: 'blob' })
-            //.map(res => res.blob())
+        //.map(res => res.blob())
             .catch((error:any) => {
                 let fileAsTextObservable = new Observable<string>(observer => {
                     const reader = new FileReader();
@@ -129,7 +130,7 @@ export class ApiService {
     }
 
     public getUser():Observable<any> {
-        let url = SITE_URL + 'me/data';
+        let url = SITE_URL + this.base_version + 'me/data';
         return this.http.get(url)
             .catch((error:any) => {
                 //this._baAlert.handlerErrorMsg(error);

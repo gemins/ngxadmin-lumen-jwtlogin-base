@@ -1,55 +1,47 @@
 <div class="row">
   <div class="col-md-12 col-table">
-    <nb-card [nbSpinner]="loadingData" nbSpinnerSize="large" nbSpinnerStatus="success">
-      <nb-card-header>
-        <span>Usuarios</span>
+    <nb-card>
+      <nb-card [nbSpinner]="loadingData" nbSpinnerSize="large" nbSpinnerStatus="success">
+        <span>Demo</span>
         <span class="float-right">
           <button class="btn btn-success btn-sm" routerLink="../create"><i class="ion-plus"></i> Nuevo</button>
         </span>
       </nb-card-header>
       <nb-card-body>
         <search-box (onChangeValue)="getPage(1, $event)" (onOptionChange)="refreshPage($event)" [baConfPage]="options" [show]="{export : false}"></search-box>
-        <div class="table-container mt-2">
+        <div class="table-container">
           <nb-alert status="primary" *ngIf="config.totalItems <= 0">
             No se encontraron resultados.
           </nb-alert>
           <table class="table table-striped" *ngIf="config.totalItems > 0">
             <thead>
               <tr class="no-top-border">
-                <th style="min-width:150px; width: 150px;">Acción</th>
-                <th style="min-width:300px; width: 300px;">Nombre completo</th>
-                <th>Rol</th>
-                <th>Genero</th>
-                <th>Email</th>
-                <th>Nacimiento</th>
+                <th style="min-width:120px; max-width: 120px;">Acción</th>
+                <th style="min-width:200px; max-width: 200px;">Nombre completo</th>
               </tr>
             </thead>
             <tbody *ngIf="asyncDataTable">
-              <tr *ngFor="let user of asyncDataTable | async | paginate: config" class="no-top-border">
+              <tr *ngFor="let demo of asyncDataTable | async | paginate: config" class="no-top-border">
                 <td>
                   <span class="btn-inline">
                     <button class="btn btn-success"
                             type="button"
-                            (click)="editItem(user.id)">
+                            (click)="editItem(demo.id)">
                       <i class="ion-edit"></i>
                     </button>
                     <button class="btn btn-primary"
                             type="button"
-                            (click)="cloneModal.show(user.id)">
+                            (click)="cloneModal.show(demo.id)">
                       <i class="ion-refresh"></i>
                     </button>
                     <button class="btn btn-danger"
                             type="button"
-                            (click)="deleteModal.show(user.id)">
+                            (click)="deleteModal.show(demo.id)">
                       <i class="ion-android-close"></i>
                     </button>
                   </span>
                 </td>
-                <td class="nowrap">{{user.first_name}} {{user.last_name}}</td>
-                <th>{{user.role}}</th>
-                <td class="text-center"><i [ngClass]="user.gender == 'female' ? 'ion-female' : 'ion-male'"></i> </td>
-                <td class="align-left">{{user.email}}</td>
-                <td class="align-left"> {{user.birthday}}</td>
+                <td class="nowrap">{{demo.name}}</td>
               </tr>
             </tbody>
           </table>
@@ -63,5 +55,5 @@
   </div>
 </div>
 
-<custom-modal #cloneModal [baModalConfig]="{title:'Clonar Usuario',body:'Desea clonar este elemento?', buttonOkey: 'Clonar', buttonOkeyColor: 'btn-primary', buttonOkeyIcon : 'fa fa-clone'}" [disabled]="cloning" (onOkey)="cloneItem($event)"></custom-modal>
-<custom-modal #deleteModal [baModalConfig]="{title:'Eliminar Usuario',body:'Esta seguro que desea eliminar este elemento?', buttonOkey: 'Eliminar', buttonOkeyColor: 'btn-danger', buttonOkeyIcon : 'ion-trash-a'}" [disabled]="deleting" (onOkey)="deleteItem($event)"></custom-modal>
+<custom-modal #cloneModal [baModalConfig]="{title:'Clonar Demo',body:'Desea clonar este elemento?', buttonOkey: 'Clonar', buttonOkeyColor: 'btn-info', buttonOkeyIcon : 'fa fa-clone'}" [disabled]="cloning" (onOkey)="cloneItem($event)"></custom-modal>
+<custom-modal #deleteModal [baModalConfig]="{title:'Eliminar Demo',body:'Esta seguro que desea eliminar este elemento?', buttonOkey: 'Eliminar', buttonOkeyColor: 'btn-danger', buttonOkeyIcon : 'ion-trash-a'}" [disabled]="deleting" (onOkey)="deleteItem($event)"></custom-modal>

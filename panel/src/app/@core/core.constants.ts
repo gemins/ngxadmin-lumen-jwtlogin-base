@@ -1,6 +1,6 @@
 import { environment } from '../../environments/environment';
 
-export const SITE_URL:string = !environment.production ? "http://api.login-base.test/v1/" : "https://api.login-base.test/v1/";
+export const SITE_URL:string = !environment.production ? "http://api.login-base.test/" : "https://api.login-base.test/";
 
 export const IMAGES_ROOT = 'assets/img/';
 
