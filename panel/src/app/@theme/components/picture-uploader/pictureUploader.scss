@@ -5,10 +5,16 @@ body{
 @include nb-install-component() {
   .picture-group {
     border: 1px dashed #b8b8b8;
-    height: 202px;
+    height: auto;
     position: relative;
     cursor: pointer;
     display: flex;
+
+    &.disabled{
+      cursor: default;
+      filter: grayscale(1);
+    }
+
     &.center-group{
       margin: auto;
     }
@@ -55,8 +61,13 @@ body{
       bottom: 0;
       line-height: 32px;
       text-align: center;
+
+      &.broken{
+        background: #af2c28;
+      }
+
     }
-    &:hover {
+    &:not(disabled):hover {
       i {
         display: block;
         @include animation(bounceIn, .5s);
@@ -68,57 +79,14 @@ body{
     }
 
     .loading {
-      width: 100%;
-      height: 100%;
-      left: 0;
+      width: 20px;
+      height: 20px;
+      right: 5px;
+      top: 5px;
       display: flex;
       position: absolute;
       justify-content: center;
       align-items: center;
-    }
-    .spinner {
-      width: 60px;
-      height: 60px;
-      position: relative;
-    }
-
-    .double-bounce1, .double-bounce2 {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background-color: #fff;
-      opacity: 0.6;
-      position: absolute;
-      top: 0;
-      left: 0;
-
-      -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
-      animation: sk-bounce 2.0s infinite ease-in-out;
-    }
-
-    .double-bounce2 {
-      -webkit-animation-delay: -1.0s;
-      animation-delay: -1.0s;
-    }
-
-    @-webkit-keyframes sk-bounce {
-      0%, 100% {
-        -webkit-transform: scale(0.0)
-      }
-      50% {
-        -webkit-transform: scale(1.0)
-      }
-    }
-
-    @keyframes sk-bounce {
-      0%, 100% {
-        transform: scale(0.0);
-        -webkit-transform: scale(0.0);
-      }
-      50% {
-        transform: scale(1.0);
-        -webkit-transform: scale(1.0);
-      }
     }
   }
 }

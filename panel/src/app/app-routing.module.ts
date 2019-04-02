@@ -1,8 +1,13 @@
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { AuthGuard } from './@core/interceptors';
 
 const routes: Routes = [
-  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule' },
+  {
+    path: 'pages',
+    canActivate: [AuthGuard],
+    loadChildren: 'app/pages/pages.module#PagesModule'
+  },
   {
     path: 'auth',
     loadChildren: './auth/auth.module#NgxAuthModule',

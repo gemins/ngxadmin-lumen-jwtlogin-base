@@ -15,6 +15,7 @@ export class NgxRoleProvider implements NbRoleProvider {
         return this.authService.onTokenChange()
             .pipe(
                 map((token: NbAuthJWTToken) => {
+                    console.log(token.getPayload()['role']);
                     return token.isValid() ? token.getPayload()['role'] : 'Guest';
                 })
             )

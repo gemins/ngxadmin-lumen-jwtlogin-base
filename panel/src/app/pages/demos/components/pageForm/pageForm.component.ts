@@ -27,9 +27,9 @@ export class DemoForm {
         const myReader: FileReader = new FileReader();
         if (fileList.length > 0) {
             const file: File = fileList[0];
-            const self = this;
+            const _this = this;
             myReader.onloadend = function (e) {
-                const dsControl = self.formGroup.controls['data_sheet'];
+                const dsControl = _this.formGroup.controls['data_sheet'];
                 const fbFile = {
                     name: file.name,
                     type: file.type,
@@ -42,17 +42,22 @@ export class DemoForm {
     }
 
     handleChangeImage(file: File, where: string){
-        let myReader: FileReader = new FileReader();
-        let self = this;
-        myReader.onloadend = function (e) {
-            let imageControl = self.formGroup.controls[where];
-            let fbImg = {
-                type: file.type,
-                base64_image: myReader.result
+        if(file){
+            const myReader: FileReader = new FileReader();
+            const _this = this;
+            myReader.onloadend = function (e) {
+                console.log(myReader.result);
+                const imageControl = _this.formGroup.controls[where];
+                const fbImg = {
+                    type: file.type,
+                    base64_image: myReader.result,
+                };
+                imageControl.setValue(fbImg);
             };
-            imageControl.setValue(fbImg);
-        };
-        myReader.readAsDataURL(file);
+            myReader.readAsDataURL(file);
+        }else{
+            const imageControl = this.formGroup.controls[where].setValue("");
+        }
     }
 
     changeSelect2Data(where, data, attr=null){

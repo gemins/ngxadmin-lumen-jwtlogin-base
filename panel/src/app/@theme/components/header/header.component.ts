@@ -4,7 +4,7 @@ import { NbMenuService, NbSidebarService } from '@nebular/theme';
 import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { LayoutService } from '../../../@core/data/layout.service';
-import { SITE_CONF } from '../../../@core/core.constants';
+import { SITE_CONF, SITE_URL } from '../../../@core/core.constants';
 
 @Component({
   selector: 'ngx-header',
@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   @Input() position = 'normal';
 
   user: any;
+  user_avatar:any=false;
 
   siteConf:any=SITE_CONF;
 
@@ -34,6 +35,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.userService.user;
+    if(this.user.avatar)
+        this.user_avatar = SITE_URL + this.user.avatar;
   }
 
   toggleSidebar(): boolean {

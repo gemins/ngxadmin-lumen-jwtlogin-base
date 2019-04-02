@@ -30,17 +30,17 @@
                   <span class="btn-inline">
                     <button class="btn btn-success"
                             type="button"
-                            (click)="editItem(user.id)">
+                            (click)="editItem(user._id)">
                       <i class="ion-edit"></i>
                     </button>
                     <button class="btn btn-primary"
                             type="button"
-                            (click)="cloneModal.show(user.id)">
+                            (click)="cloneModal.show(user._id)">
                       <i class="ion-refresh"></i>
                     </button>
                     <button class="btn btn-danger"
                             type="button"
-                            (click)="deleteModal.show(user.id)">
+                            (click)="deleteModal.show(user._id)">
                       <i class="ion-android-close"></i>
                     </button>
                   </span>

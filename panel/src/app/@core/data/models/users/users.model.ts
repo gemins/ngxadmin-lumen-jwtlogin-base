@@ -1,7 +1,7 @@
 import {FormBuilder, Validators} from '@angular/forms';
 //import {EqualPasswordsValidator} from '../../../validators';
 export class User {
-    id: number;
+    _id: number;
     first_name: string;
     last_name: string;
     birthday: string;
@@ -22,7 +22,7 @@ export class User {
         this._fb = new FormBuilder();
 
         return {
-            id: [this.id || ''],
+            _id: [this._id || ''],
             first_name: [this.first_name || '', <any>Validators.required],
             last_name: [this.last_name || ''],
             birthday: [this.birthday || ''],

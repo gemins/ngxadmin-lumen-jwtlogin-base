@@ -46,14 +46,10 @@
                                 <label for="first_name">Nombre</label>
                                 <input type="text" class="form-control" formControlName="first_name" id="first_name" placeholder="Nombre">
                             </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="last_name">Apellido</label>
                                 <input type="text" class="form-control" formControlName="last_name" id="last_name" placeholder="Apellido">
                             </div>
-                        </div>
-                        <div class="col-md-12">
                             <div class="form-group">
                                 <label>Genero</label>
                                 <div class="form-check">
@@ -68,6 +64,13 @@
                                         <span class="custom-control-description">Mujer</span>
                                     </label>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="last_name">Avatar</label>
+                                <vs-picture-uploader [picture]="formGroup.controls.avatar.value" (onChangePicture)="handleChangeImage($event, 'avatar')"></vs-picture-uploader>
+                                <!--<div class="text-center mt-3">(0px x 0px)</div>-->
                             </div>
                         </div>
                     </div>

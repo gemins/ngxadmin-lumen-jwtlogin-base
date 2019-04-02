@@ -34,17 +34,21 @@ export class UserForm {
         this.formGroup.controls[where].setValue(values[attr]);
     }
 
-    handleChangeImage(file: File){
-        let myReader: FileReader = new FileReader();
-        let self = this;
-        myReader.onloadend = function (e) {
-            let avatarControl = self.formGroup.controls['avatar'];
-            let fbImg = {
-                type: file.type,
-                base64_image: myReader.result
+    handleChangeImage(file: File, where: string){
+        if(file){
+            const myReader: FileReader = new FileReader();
+            const _this = this;
+            myReader.onloadend = function (e) {
+                const imageControl = _this.formGroup.controls[where];
+                const fbImg = {
+                    type: file.type,
+                    base64_image: myReader.result,
+                };
+                imageControl.setValue(fbImg);
             };
-            avatarControl.setValue(fbImg);
-        };
-        myReader.readAsDataURL(file);
+            myReader.readAsDataURL(file);
+        }else{
+            const imageControl = this.formGroup.controls[where].setValue("");
+        }
     }
 }

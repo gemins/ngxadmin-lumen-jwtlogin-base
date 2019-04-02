@@ -1,19 +1,23 @@
-<div class="picture-group" [ngClass]="{uploading: uploadInProgress, 'center-group': position == 'center'}">
-    <div class="picture-wrapper" (click)="bringFileSelector();">
-        <img [src]="picture ? picture : defaultPicture">
+<div class="picture-group" [ngClass]="{uploading: uploadInProgress, 'center-group': position == 'center', 'disabled': disabled}">
+  <div class="picture-wrapper" (click)="bringFileSelector();">
+    <img [src]="selectedPicture">
 
-        <div class="loading" *ngIf="uploadInProgress">
-            <div class="spinner">
-                <div class="double-bounce1"></div>
-                <div class="double-bounce2"></div>
-            </div>
-        </div>
+    <div class="loading" *ngIf="uploadInProgress && !config.hide_loader">
+      <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
     </div>
-    <i class="ion-ios-close-outline" (click)="removePicture()" *ngIf="picture && canDelete"></i>
-    <a href class="change-picture" (click)="bringFileSelector()">Change profile Picture</a>
-    <input #fileUpload ngFileSelect
-           [options]="uploaderOptions"
-           (uploadOutput)="beforeUpload($event)"
-           accept="image/*"
-           type="file" hidden="true">
+  </div>
+  <i class="ion-ios-close-outline" (click)="removePicture()" *ngIf="picture && canDelete"></i>
+  <a href class="change-picture" [ngClass]="{'broken' : linkIsBroken}" (click)="bringFileSelector();" *ngIf="!config.hide_message">
+    <span *ngIf="!linkIsBroken">
+      Elegir una imagen
+    </span>
+    <span *ngIf="linkIsBroken">
+      Elija otra foto, este link esta roto
+    </span>
+  </a>
+  <input #fileUpload ngFileSelect [options]="uploaderOptions"
+         (uploadOutput)="beforeUpload($event)"
+         [required]="required"
+         accept="image/*"
+         type="file" hidden="true">
 </div>

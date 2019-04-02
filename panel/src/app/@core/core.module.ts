@@ -72,17 +72,19 @@ export const NB_CORE_PROVIDERS = [
         view: '*',
       },
       user: {
-        parent: 'guest',
+        parent: 'taster',
+        view: '*',
         create: '*',
         edit: '*',
-        remove: '*',
       },
-      moderator: {
+      admin: {
         parent: 'user',
+        clone: '*',
         remove: '*',
       },
-      Root: {
-        parent: 'moderator',
+      root: {
+        parent: 'admin',
+        clone: '*',
         remove: '*',
       },
     },

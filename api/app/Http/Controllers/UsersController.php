@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
 use App\Libraries\Helpers;
+use App\Role;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -35,7 +37,19 @@ class UsersController extends Controller {
             $data["password"] = app('hash')->make($data["password"]);
 
             $user = $m::create($data);
-            $user->roles()->sync($data["role"]);
+            $role = Role::select("_id")->where("type", $data["role"])->first();
+            $role_id = $role ? $role->_id : null;
+            if($data["role"] && $role_id)
+                $user->roles()->sync([$role_id]);
+
+            //Image
+            $image = $request->get('avatar');
+            $newImage = Helpers::save_image($image, 'users', "avatar_".$user->id);
+            if($newImage){
+                $data['avatar'] = $newImage["path"];
+                $data['avatar_thumb'] = $newImage["path_thumb"];
+                $user->update($data);
+            }
 
             return $this->respond(Response::HTTP_CREATED, $user);
         }catch(HttpResponseException $e){
@@ -62,10 +76,21 @@ class UsersController extends Controller {
                 $data["password"] = app('hash')->make($data["password"]);
             }
 
-            if($data["role"])
-                $model->roles()->sync($data["role"]);
+            $role = Role::select("_id")->where("type", $data["role"])->first();
+            $role_id = $role ? $role->_id : null;
+            if($data["role"] && $role_id)
+                $model->roles()->sync([$role_id]);
+
+            //Image
+            $image = $request->get('avatar');
+            $newImage = Helpers::save_image($image, 'users', "avatar_".$id);
+            if($newImage){
+                $data['avatar'] = $newImage["path"];
+                $data['avatar_thumb'] = $newImage["path_thumb"];
+            }
 
             $model->update($data);
+
             return $this->respond(Response::HTTP_OK, $model);
         }catch(HttpResponseException $e){
             return $e->getResponse();
