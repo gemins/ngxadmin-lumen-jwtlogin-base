@@ -30,7 +30,7 @@ export class Select2Component {
     }
 
     ngOnChanges() {
-        if (!this.multiple && this.defaultValue && this.defaultValue.id){
+        if (!this.multiple && this.defaultValue && this.defaultValue._id){
             const data = [this.defaultValue];
             this.createSelect2(data);
         }else if (this.multiple && this.defaultValue){
@@ -61,6 +61,10 @@ export class Select2Component {
     }
 
     createSelect2(data) {
+        //Fix ID undefined replace by _id #ref error when sql provider is MongoDB
+        if(data[0] && data[0]._id && data[0].id == undefined)
+            data[0]['id'] = data[0]._id;
+
         const self = this;
         this.elemSelect = this._elementRef.nativeElement.querySelector('#' + this.id);
         jQuery(this.elemSelect).select2({
@@ -87,7 +91,13 @@ export class Select2Component {
                 delay: 250,
                 processResults: function (data: any, params: any) {
                     return {
-                        results: data[self.elementData].map(function (item) {
+                        results: data[self.elementData].map(function (item)
+                            {
+                                if(item._id)
+                                    item['id'] = item._id;
+                                if(!item.text)
+                                    item['text'] = item.name;
+
                                 return item;
                             }
                         ),
@@ -118,9 +128,9 @@ export class Select2Component {
         });
 
 
-        if (!self.multiple && self.defaultValue && self.defaultValue.id && self.defaultValue.id != undefined) {
-            jQuery(self.elemSelect).val(self.defaultValue.id).trigger('change');
-        }else if(self.multiple && self.defaultValue[0] && self.defaultValue[0].id != undefined) {
+        if (!self.multiple && self.defaultValue && self.defaultValue._id && self.defaultValue._id != undefined) {
+            jQuery(self.elemSelect).val(self.defaultValue._id).trigger('change');
+        }else if(self.multiple && self.defaultValue[0] && self.defaultValue[0]._id != undefined) {
             var selectedValues = self.parseUrls(self.defaultValue);
             jQuery(self.elemSelect).val(selectedValues).trigger('change');
         }
